@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+
+    "name": "Dicewars Tweaks",
+    "author": "Xyxen",
+    "version": "1.0.0",
+
+    "description": "Tweaks for Game Design's Dicewars",
+
+    "content_scripts": [
+        {
+            "matches": ["http://www.gamedesign.jp/games/dicewars/"],
+            "run_at": "document_end",
+            "js": ["inject.js"]
+        }
+    ],
+
+    "web_accessible_resources": [
+        "inject/*.js"
+    ]
+}
