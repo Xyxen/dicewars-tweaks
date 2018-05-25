@@ -1,11 +1,5 @@
 'use strict';
 
-// Handles resolution-dependent scaling.
-function sz(px)
-{
-    return Math.floor(px * nume / deno);
-}
-
 var cpu_play = false;
 
 window.addEventListener('game_init', function() {
@@ -24,8 +18,7 @@ var click_pmax_old = click_pmax;
 //          function to handle pressing it.
 click_pmax = function()
 {
-    var spr_pmax = spr[sn_pmax];
-    var cpu_btn = spr_pmax.getChildByName('cpu');
+    var cpu_btn = spr[sn_pmax].getChildByName('cpu');
     var pt = cpu_btn.globalToLocal(stage.mouseX, stage.mouseY);
     if (Math.abs(pt.x) < sz(70) && Math.abs(pt.y) < sz(20)) {
         cpu_play = !cpu_play;

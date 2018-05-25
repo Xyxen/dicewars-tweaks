@@ -24,6 +24,8 @@ function injectFile(path)
     document.body.appendChild(script);
 }
 
+injectFile("inject/sprites.js");
+
 injectFile("inject/resume_soundctx.js");
 injectFile("inject/frame_skip.js");
 injectFile("inject/real_loading.js");
