@@ -1,3 +1,4 @@
+'use strict';
 
 // Injects and executes the given function.
 function injectExecutable(func)
