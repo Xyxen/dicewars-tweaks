@@ -67,5 +67,8 @@ start_battle = function()
         // Skip the dice animation if they're not.
         waitcount = 15;
         timer_func = after_battle;
+        spr[sn_battle].visible = false;
+        draw_player_data();
+        stage.update();
     }
 }
