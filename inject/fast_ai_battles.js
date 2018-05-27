@@ -10,6 +10,7 @@ dicewars.addEventListener('init', function() {
     fast_btn.y = ypos_mes + sz(60);
     fast_btn.textAlign = 'center';
     fast_btn.textBaseline = 'middle';
+    fast_btn.visible = false;
     sn_btn_fastgame = addSprite(fast_btn);
 }, {once: true});
 
