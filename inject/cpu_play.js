@@ -65,3 +65,10 @@ dicewars.addEventListener('pre-start_gameover', function(event) {
 		}
     }
 });
+
+// Set the player-controlled army back to purple so you don't end up playing
+// as the last colour to win a cpu-only game.
+hookFunction(start_title);
+dicewars.addEventListener('pre-start_title', function(event) {
+    game.user = 0;
+});
