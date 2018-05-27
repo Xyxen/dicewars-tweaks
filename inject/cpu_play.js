@@ -2,7 +2,7 @@
 
 var cpu_play = false;
 
-window.addEventListener('game_init', function() {
+dicewars.addEventListener('init', function() {
     // Add a CPU-only toggle button to the title screen.
     var cpu_btn = new createjs.Text("CPU Play", sz(32)+'px Anton', '#aaa');
     cpu_btn.name = 'cpu';
@@ -13,33 +13,28 @@ window.addEventListener('game_init', function() {
     spr[sn_pmax].addChild(cpu_btn);
 }, {once: true});
 
-var click_pmax_old = click_pmax;
-//OVERRIDE: We're adding another button to the title screen, so we hook this
-//          function to handle pressing it.
-click_pmax = function()
-{
+// We're adding another button to the title screen, so we hook this function
+// to handle pressing it.
+hookFunction(click_pmax);
+dicewars.addEventListener('pre-click_pmax', function(event) {
     var cpu_btn = spr[sn_pmax].getChildByName('cpu');
     var pt = cpu_btn.globalToLocal(stage.mouseX, stage.mouseY);
     if (Math.abs(pt.x) < sz(70) && Math.abs(pt.y) < sz(20)) {
         cpu_play = !cpu_play;
         cpu_btn.color = (cpu_play ? '#f00' : '#aaa');
         stage.update();
-    } else {
-        click_pmax_old();
+        event.preventDefault();
     }
-}
+});
 
-var start_man_old = start_man;
-//OVERRIDE: When playing CPU-only, the player's turn is handled by the AI
-//          routines as well.
-start_man = function()
-{
+// When playing CPU-only, the player's turn is also handled by the AI routines.
+hookFunction(start_man);
+dicewars.addEventListener('pre-start_man', function(event) {
     if (cpu_play) {
+        event.preventDefault();
         start_com();
-    } else {
-        start_man_old();
     }
-}
+});
 
 function remaining_players()
 {
@@ -52,11 +47,12 @@ function remaining_players()
     return players;
 }
 
-var start_gameover_old = start_gameover;
-//OVERRIDE: Never lose in a CPU-only game.
-start_gameover = function()
-{
+// Never lose in a CPU-only game.
+hookFunction(start_gameover);
+dicewars.addEventListener('pre-start_gameover', function(event) {
     if (cpu_play) {
+        event.preventDefault();
+
         // Switch the fake player to the winner of this battle.
         var winner = game.adat[game.area_from].arm;
         game.user = winner;
@@ -67,7 +63,5 @@ start_gameover = function()
 		} else {
 			start_player();
 		}
-    } else {
-        start_gameover_old();
     }
-}
+});

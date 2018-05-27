@@ -1,14 +1,15 @@
 'use strict';
 
-var fake_loading_old = fake_loading;
-//OVERRIDE: Instead of waiting a fixed time, just wait for the sounds and
-//          fonts to load.
-fake_loading = function()
-{
+// Instead of waiting a fixed time, wait for the sounds and fonts to load.
+hookFunction(fake_loading);
+dicewars.addEventListener('pre-fake_loading', function(event) {
+    // Full override.
+    event.preventDefault();
+
     // Draw loading screen. Set waitcount high so the game code doesn't decide
     // loading is done with.
     waitcount = 1e9;
-    fake_loading_old();
+    event.callOriginal();
 
     // No further ticking necessary. Everything is callback-driven from here.
     waitcount = 0;
@@ -19,11 +20,11 @@ fake_loading = function()
     if (!soundon) {
         waitForFonts();
     }
-}
+});
 
 // By default, the game only shows the loading screen AFTER sounds have
 // loaded. We'll show it right away instead.
-window.addEventListener('game_init', function() {
+dicewars.addEventListener('init', function() {
     timer_func = fake_loading;
 }, {once: true});
 

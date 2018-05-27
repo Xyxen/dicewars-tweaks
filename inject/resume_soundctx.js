@@ -7,7 +7,7 @@ function resumeSound()
     createjs.Sound.activePlugin.context.resume();
 }
 
-window.addEventListener('game_init', function() {
+dicewars.addEventListener('init', function() {
     // Enable sound on the mousedown event. We want it available before the
     // click event, or there'll be no sound if the first click is on a button.
     stage.canvas.addEventListener('mousedown', resumeSound, {once: true});
