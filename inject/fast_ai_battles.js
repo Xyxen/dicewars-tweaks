@@ -29,6 +29,7 @@ function click_gameopts()
 hookFunction(start_title);
 dicewars.addEventListener('post-start_title', function() {
     fast_play = false;
+    spr[sn_btn_fastgame].color = (fast_play ? '#f00' : '#aaa');
 });
 
 // Show the fast play button on the map selection screen.
