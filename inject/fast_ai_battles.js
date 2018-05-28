@@ -1,7 +1,5 @@
 'use strict';
 
-var fast_play = false;
-
 var sn_btn_fastgame;
 dicewars.addEventListener('init', function() {
     var fast_btn = new createjs.Text("Fast Game", sz(32)+'px Anton', '#aaa');
@@ -14,14 +12,19 @@ dicewars.addEventListener('init', function() {
     sn_btn_fastgame = addSprite(fast_btn);
 }, {once: true});
 
+var fast_play = new ObservableVar(false);
+fast_play.addEventListener('set', function(event) {
+    // Keep the button in sync with the backing variable.
+    spr[sn_btn_fastgame].color = (event.newValue ? '#f00' : '#aaa');
+});
+
 // Handle mouse presses for the fast play button.
 function click_gameopts()
 {
     var fast_btn = spr[sn_btn_fastgame];
     var pt = fast_btn.globalToLocal(stage.mouseX, stage.mouseY);
     if (Math.abs(pt.x) < sz(70) && Math.abs(pt.y) < sz(20)) {
-        fast_play = !fast_play;
-        fast_btn.color = (fast_play ? '#f00' : '#aaa');
+        fast_play.value = !fast_play.value;
         stage.update();
     }
 }
@@ -29,8 +32,7 @@ function click_gameopts()
 // Reset the fast play flag each time a new game is started.
 hookFunction(start_title);
 dicewars.addEventListener('post-start_title', function() {
-    fast_play = false;
-    spr[sn_btn_fastgame].color = (fast_play ? '#f00' : '#aaa');
+    fast_play.value = false;
 });
 
 // Show the fast play button on the map selection screen.
@@ -46,14 +48,14 @@ var start_battle_old = start_battle;
 hookFunction(start_battle);
 dicewars.addEventListener('post-start_battle', function() {
     // If we're not in fast play, do nothing.
-    if (!fast_play) {
+    if (!fast_play.value) {
         return;
     }
 
     // Check if the player is even involved in this fight.
     var from = game.adat[game.area_from].arm;
     var to = game.adat[game.area_to].arm;
-    if ((from != game.user && to != game.user) || cpu_play) {
+    if ((from != game.user && to != game.user) || cpu_play.value) {
         // Skip the dice animation if they're not.
         waitcount = 15;
         timer_func = after_battle;

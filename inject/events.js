@@ -3,23 +3,25 @@
 // All game-related events are dispatched through this.
 var dicewars = new EventTarget();
 
-// Represents an event fired from a wrapped game function.
-class HookedFuncEvent extends Event
+// A variable that fires events when modified.
+class ObservableVar extends EventTarget
 {
-    constructor(name, eventInit, func, args)
+    constructor(value)
     {
-        super(name, eventInit);
-
-        // Try to keep these from being tweaked. They're mutable, so this
-        // isn't perfect.
-        Object.defineProperty(this, 'func', {value: func, writable: false});
-        Object.defineProperty(this, 'args', {value: args, writable: false});
-    }
-
-    // Invoke the original function with its original arguments.
-    callOriginal()
-    {
-        return this.func.apply(null, this.args);
+        super();
+        var _value = value;
+        Object.defineProperty(this, 'value', {
+            get: () => {
+                return _value;
+            },
+            set: (newValue) => {
+                var event = new Event('set');
+                event.oldValue = _value;
+                event.newValue = newValue;
+                this.dispatchEvent(event);
+                _value = newValue;
+            }
+        });
     }
 }
 
@@ -42,12 +44,24 @@ function onTick(event)
     check_button();
 }
 
-// Add properties and methods to the event that let listeners access and call
-// the original function with appropriate arguments.
-function addOriginalFunc(event, func, args)
+// Represents an event fired from a wrapped game function.
+class HookedFuncEvent extends Event
 {
-    Object.defineProperty(event, 'func', {value: func, writable: false});
-    Object.defineProperty(event, 'args', {value: args, writable: false});
+    constructor(name, eventInit, func, args)
+    {
+        super(name, eventInit);
+
+        // Try to keep these from being tweaked. They're mutable, so this
+        // isn't perfect.
+        Object.defineProperty(this, 'func', {value: func, writable: false});
+        Object.defineProperty(this, 'args', {value: args, writable: false});
+    }
+
+    // Invoke the original function with its original arguments.
+    callOriginal()
+    {
+        return this.func.apply(null, this.args);
+    }
 }
 
 var hookedFuncs = {};

@@ -1,7 +1,5 @@
 'use strict';
 
-var cpu_play = false;
-
 dicewars.addEventListener('init', function() {
     // Add a CPU-only toggle button to the title screen.
     var cpu_btn = new createjs.Text("CPU Play", sz(32)+'px Anton', '#aaa');
@@ -13,6 +11,13 @@ dicewars.addEventListener('init', function() {
     spr[sn_pmax].addChild(cpu_btn);
 }, {once: true});
 
+var cpu_play = new ObservableVar(false);
+cpu_play.addEventListener('set', function(event) {
+    // Keep the button in sync with the backing variable.
+    var cpu_btn = spr[sn_pmax].getChildByName('cpu');
+    cpu_btn.color = (event.newValue ? '#f00' : '#aaa');
+});
+
 // We're adding another button to the title screen, so we hook this function
 // to handle pressing it.
 hookFunction(click_pmax);
@@ -20,8 +25,7 @@ dicewars.addEventListener('pre-click_pmax', function(event) {
     var cpu_btn = spr[sn_pmax].getChildByName('cpu');
     var pt = cpu_btn.globalToLocal(stage.mouseX, stage.mouseY);
     if (Math.abs(pt.x) < sz(70) && Math.abs(pt.y) < sz(20)) {
-        cpu_play = !cpu_play;
-        cpu_btn.color = (cpu_play ? '#f00' : '#aaa');
+        cpu_play.value = !cpu_play.value;
         stage.update();
         event.preventDefault();
     }
@@ -30,7 +34,7 @@ dicewars.addEventListener('pre-click_pmax', function(event) {
 // When playing CPU-only, the player's turn is also handled by the AI routines.
 hookFunction(start_man);
 dicewars.addEventListener('pre-start_man', function(event) {
-    if (cpu_play) {
+    if (cpu_play.value) {
         event.preventDefault();
         start_com();
     }
@@ -50,7 +54,7 @@ function remaining_players()
 // Never lose in a CPU-only game.
 hookFunction(start_gameover);
 dicewars.addEventListener('pre-start_gameover', function(event) {
-    if (cpu_play) {
+    if (cpu_play.value) {
         event.preventDefault();
 
         // Switch the fake player to the winner of this battle.
