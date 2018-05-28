@@ -10,6 +10,7 @@ and this project adheres to
 - Added the ability to speed up games by skipping dice roll animations for AI
   vs AI battles. This can be controlled via a toggle button on the map
   selection screen.
+- Added a "back to title" button to the map selection screen.
 
 ## Fixed
 - Fixed an issue where starting a standard game after watching a CPU-only match

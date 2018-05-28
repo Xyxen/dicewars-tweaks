@@ -28,6 +28,7 @@ injectFile("inject/events.js");
 injectFile("inject/sprites.js");
 
 injectFile("inject/resume_soundctx.js");
+injectFile("inject/better_ux.js");
 injectFile("inject/frame_skip.js");
 injectFile("inject/real_loading.js");
 injectFile("inject/cpu_play.js");
