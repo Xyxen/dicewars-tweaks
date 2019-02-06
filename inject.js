@@ -34,3 +34,4 @@ injectFile("inject/frame_skip.js");
 injectFile("inject/real_loading.js");
 injectFile("inject/cpu_play.js");
 injectFile("inject/fast_ai_battles.js");
+injectFile("inject/replay_history.js");

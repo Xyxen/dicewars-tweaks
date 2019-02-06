@@ -11,6 +11,7 @@ and this project adheres to
   vs AI battles. This can be controlled via a toggle button on the map
   selection screen.
 - Added a "back to title" button to the map selection screen.
+- Added a "replay" button to history so you can play history more than once.
 
 ## Fixed
 - Fixed an issue where starting a standard game after watching a CPU-only match

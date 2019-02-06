@@ -26,6 +26,7 @@ As of this writing, there is no public extension on the Chrome web store.
 - Fast-game mode, which skips AI vs AI dice rolls to reduce the time before
   your next turn. Also makes CPU-only games more bearable.
 - A loading screen representative of the actual time spent loading.
+- History replaying, so you can watch yourself win (or lose) again and again.
 
 Have a look at the **CHANGELOG** for more information.
 
