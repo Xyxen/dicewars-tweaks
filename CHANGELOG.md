@@ -6,6 +6,8 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## 1.1.0 - 2019-02-06
 ### Added
 - Added the ability to speed up games by skipping dice roll animations for AI
   vs AI battles. This can be controlled via a toggle button on the map
