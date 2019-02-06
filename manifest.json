@@ -9,7 +9,7 @@
 
     "content_scripts": [
         {
-            "matches": ["http://www.gamedesign.jp/games/dicewars/"],
+            "matches": ["*://www.gamedesign.jp/games/dicewars/"],
             "run_at": "document_end",
             "js": ["inject.js"]
         }

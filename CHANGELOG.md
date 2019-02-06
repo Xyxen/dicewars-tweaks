@@ -15,12 +15,13 @@ and this project adheres to
 ## Fixed
 - Fixed an issue where starting a standard game after watching a CPU-only match
   would result in playing as the winner of the CPU match, rather than purple.
+- Fixed extension not working on HTTPS.
 
 ## 1.0.0 - 2018-05-23
 ### Added
 - Restored sound on Chrome by resuming the sound context on the first available
   user-generated event.
-- Sped up battles on slow computers by skipping frames on the dice rolling 
+- Sped up battles on slow computers by skipping frames on the dice rolling
   animation when the canvas can't keep up with the target framerate (60FPS)
   that the game expects.
 - Added a toggle button on the main menu that lets you run CPU-only matches.

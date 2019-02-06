@@ -4,7 +4,7 @@
 ## Introduction
 
 This is an opinionated Google Chrome extension that expands the functionality
-of [Game Design's Dicewars](http://www.gamedesign.jp/games/dicewars/) by fixing
+of [Game Design's Dicewars](https://www.gamedesign.jp/games/dicewars/) by fixing
 perceived bugs or omissions, and adding features that I think are fun. See the
 list of features below for details.
 
