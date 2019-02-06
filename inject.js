@@ -26,6 +26,7 @@ function injectFile(path)
 
 injectFile("inject/events.js");
 injectFile("inject/sprites.js");
+injectFile("inject/buttons.js");
 
 injectFile("inject/resume_soundctx.js");
 injectFile("inject/better_ux.js");
